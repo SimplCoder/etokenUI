@@ -75,6 +75,35 @@ export class HomePage implements OnInit, OnDestroy {
       );
   }
 
+
+  
+  onResetClick() {
+    if(confirm("Are you sure to reset all tokens ")) {
+    this.appService.showLoader.next(true);
+    this.httpClient.post('https://asia-east2-etoken-ecd58.cloudfunctions.net/api/resetToken', {
+      shopName: this.shopName,
+      shopSecret: this.secretKey
+    })
+      .subscribe(
+        (res) => {
+          if (res) {
+            /* tslint:disable:no-string-literal */
+            this.currentToken = res['currentToken'];
+            this.message = res['message'];
+            this.timeToken = res['timeToken'];
+            this.totalToken = res['totalToken'];
+            /* tslint:enable:no-string-literal */
+            this.appService.presentToast('All Token got reset', 'success');
+          }
+          this.appService.showLoader.next(false);
+        },
+        (err) => { this.appService.presentToast(err.error.error, 'danger'); this.appService.showLoader.next(false); }
+      );
+    }
+  }
+
+
+
   UpdateToken(value: number) {
     this.appService.showLoader.next(true);
     this.httpClient.post('https://asia-east2-etoken-ecd58.cloudfunctions.net/api/increaseToken', {
