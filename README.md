@@ -1,4 +1,3 @@
-***p***
 # Token Generator Application for retail Shop
 
 To run the project you need to clone the repo. 
