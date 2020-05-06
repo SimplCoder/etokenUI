@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class CustomerPage implements OnInit, OnDestroy {
 
   shopName: string;
+  shopDisplay:string="";
   message: string;
   mobileNumber: number;
   currentToken: number;
@@ -30,6 +31,7 @@ export class CustomerPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
       this.shopName = params.shopName;
+      this.shopDisplay=params.shopName;
     });
   }
 
@@ -55,7 +57,7 @@ export class CustomerPage implements OnInit, OnDestroy {
             this.message = res['message'];
             this.eta = res['eta'];
             this.tokenNo = res['tokenNo'];
-            this.shopName = res['shopNameDisplay'];
+            this.shopDisplay = res['shopNameDisplay'];
             /* tslint:enable:no-string-literal */
           }
           this.tokenGenerated = true;
@@ -66,7 +68,7 @@ export class CustomerPage implements OnInit, OnDestroy {
   }
 
   isValidMobileNumber(): boolean {
-    const phoneRe = /^[6-9]\d{9}$/;
+    const phoneRe = /^[2-9]\d{9}$/;
     return phoneRe.test(this.mobileNumber.toString());
   }
 
