@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Shop Name</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="top: 2%;">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="card" size-xl="8" offset-xl="2" size-lg="8" offset-lg="2">
+        <ion-card color="light" style="text-align: initial;">
+          <ion-card-header>
+            <ion-card-title class="msg-title">Message: </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row>
+              <ion-col>
+              <ion-item>
+                <ion-text class="msg-content">
+                  Shop will open till 6pm
+                </ion-text>
+              </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: 2%;">
+      <ion-col class="card" size-xl="8" offset-xl="2" size-lg="8" offset-lg="2">
+        <ion-card color="light" style="text-align: initial;">
+          <ion-card-content>
+            <ion-row>
+              <ion-col>
+                <ion-label class="msg-box" style="float: left;padding-right: 10px;">Mobile No: </ion-label>
+                <ion-item>
+                  <ion-input type="number" class="msg-box-content"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: 2%;">
+      <ion-col class="card" size-xl="8" offset-xl="2" size-lg="8" offset-lg="2">
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-title class="card-title">Your Token No.</ion-card-title>
+          <ion-card-subtitle class="card-subtitle">50</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+                <ion-label class="time-to-wait" style="float: center;">Estimated Time to wait: 100 mins</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
