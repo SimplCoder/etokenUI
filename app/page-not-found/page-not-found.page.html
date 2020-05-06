@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Welcome to E-Token Generator</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <ion-grid>
+   <ion-row style="margin-top: 5%;">
+     <ion-col size-xl="8" offset-xl="2" size-lg="8" offset-lg="2">
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-subtitle class="card-subtitle">If you are a customer then enter the Shop Name only. Otherwise, If you are a retailer then enter your secretKey along with the Shop Name</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+        <ion-item>
+          <ion-label>Shop Name</ion-label>
+          <ion-input type="text" [(ngModel)]="shopName"></ion-input>
+        </ion-item>
+        <ion-item style="margin-top: 1%;">
+          <ion-label>Secret Key</ion-label>
+          <ion-input type="text" [(ngModel)]="secretKey"></ion-input>
+        </ion-item>
+        <ion-button style="margin-top: 1%;" color="tertiary" expand="block" (click)="navigate()">Navigate</ion-button>
+        </ion-card-content>
+      </ion-card>
+     </ion-col>
+   </ion-row>
+ </ion-grid>
+</ion-content>

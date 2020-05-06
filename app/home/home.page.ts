@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ToastController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 import { AppService } from '../app.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
   shopName: string;
   secretKey: string;
   timeTakenToServer = 2;
@@ -16,16 +16,17 @@ export class HomePage implements OnInit {
   message: string;
   timeToken: number;
   totalToken: number;
+  private routeSub: Subscription;
 
   constructor(
     private route: ActivatedRoute, private httpClient: HttpClient,
-    private toastController: ToastController, private appService: AppService) {
-    this.route.queryParams.subscribe(params => {
-      this.shopName = params.shopName;
-      this.secretKey = params.shopSecret;
-    });
+    private appService: AppService) {
   }
   ngOnInit(): void {
+    this.routeSub = this.route.params.subscribe(params => {
+      this.shopName = params.shopName;
+      this.secretKey = params.shopKey;
+    });
     this.appService.showLoader.next(true);
     this.httpClient.get('https://asia-east2-etoken-ecd58.cloudfunctions.net/api/getShopDetails?shopName='
       + this.shopName + '&shopSecret=' + this.secretKey)
@@ -41,18 +42,12 @@ export class HomePage implements OnInit {
           }
           this.appService.showLoader.next(false);
         },
-        (err) => { this.presentToast(err.error.error, 'danger');  this.appService.showLoader.next(false);}
+        (err) => { this.appService.presentToast(err.error.error, 'danger'); this.appService.showLoader.next(false); }
       );
   }
 
-  async presentToast(msg: string, type: string) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 3000,
-      color: type,
-      position: 'top'
-    });
-    toast.present();
+  ngOnDestroy() {
+    this.routeSub.unsubscribe();
   }
 
   onClickUpdate() {
@@ -72,11 +67,11 @@ export class HomePage implements OnInit {
             this.timeToken = res['timeToken'];
             this.totalToken = res['totalToken'];
             /* tslint:enable:no-string-literal */
-            this.presentToast('Information Updates Successfully', 'success');
+            this.appService.presentToast('Counter Updated', 'success');
           }
           this.appService.showLoader.next(false);
         },
-        (err) => { this.presentToast(err.error.error, 'danger');  this.appService.showLoader.next(false); }
+        (err) => { this.appService.presentToast(err.error.error, 'danger'); this.appService.showLoader.next(false); }
       );
   }
 
@@ -96,11 +91,11 @@ export class HomePage implements OnInit {
             this.timeToken = res['timeToken'];
             this.totalToken = res['totalToken'];
             /* tslint:enable:no-string-literal */
-            this.presentToast('Information Updates Successfully', 'success');
+            this.appService.presentToast('Information Updated Successfully', 'success');
           }
           this.appService.showLoader.next(false);
         },
-        (err) => { this.presentToast(err.error.error, 'danger'); this.appService.showLoader.next(false); }
+        (err) => { this.appService.presentToast(err.error.error, 'danger'); this.appService.showLoader.next(false); }
       );
   }
 }
